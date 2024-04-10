@@ -25,12 +25,11 @@ class DataFeedCommandTest extends KernelTestCase
 
         // fetches and injects dependencies for the constructor from the container
         $xmlFileValidator = $container->get(XmlFileValidator::class);
-        $xmlParser = $container->get(XmlDataHandler::class);
-        $xmlDataStorage = $container->get(XmlDataStore::class);
+        $xmlDataHandler = $container->get(XmlDataHandler::class);
 
         // instantiates the application using constructor's required parameters
         $application = new Application($kernel);
-        $dataFeedCommand = new DataFeedCommand($xmlFileValidator, $xmlParser, $xmlDataStorage);
+        $dataFeedCommand = new DataFeedCommand($xmlFileValidator, $xmlDataHandler);
         $application->add($dataFeedCommand);
 
         // initializes the command
