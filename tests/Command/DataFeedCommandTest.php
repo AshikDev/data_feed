@@ -3,7 +3,6 @@
 namespace App\Tests\Command;
 
 use App\Command\DataFeedCommand;
-use App\Service\CatalogItem\XmlDataStore;
 use App\Service\CatalogItem\XmlDataHandler;
 use App\Service\FileValidator\XmlFileValidator;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
