@@ -9,7 +9,6 @@
 - [Alternative Database Configurations](#alternative-database-configurations)
 - [Usage](#usage)
 - [Expected Output](#expected-output)
-- [File Structure](#file-structure)
 
 ## Overview
 This Symfony application validates, parses, and stores XML data in a database.
@@ -172,15 +171,3 @@ Console output should show 3446 rows saved out of 3449 from the specified XML fi
 `! [NOTE] 3446 row are saved  `
 
 `[OK] Done`
-
-# File Structure:
-
-I've completed my tasks on the specified files and am providing the path for your review.
-
-#### Data feed console program
-
-`src/Command/DataFeedCommand.php`
-
-#### PHP unit test
-
-`tests/Command/DataFeedCommandTest.php`
