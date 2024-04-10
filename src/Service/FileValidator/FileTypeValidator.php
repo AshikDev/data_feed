@@ -21,8 +21,8 @@ class FileTypeValidator implements FileTypeValidatorInterface
         }
 
         // Further validate the file by checking its MIME type.
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
-        $mimeType = $finfo->file($filepath);
+        $fileMimeTypeDetector = new finfo(FILEINFO_MIME_TYPE);
+        $mimeType = $fileMimeTypeDetector->file($filepath);
         if (!in_array($mimeType, $requiredMimeType, true)) {
             throw new InvalidFileException('Invalid MIME type.');
         }

@@ -24,19 +24,18 @@ services:
         class: App\Command\DataFeedCommand
         arguments:
             $xmlFileValidator: '@App\Service\FileValidator\XmlFileValidator'
-            $xmlParser: '@App\Service\FileReader\XmlParser'
-            $xmlDataStorage: '@App\Service\CatalogItem\XmlDataStorage'
+            $xmlDataHandler: '@App\Service\CatalogItem\XmlDataHandler'
 
     App\Service\FileValidator\XmlFileValidator:
         $filePathValidator: '@App\Service\FileValidator\FilePathValidator'
         $fileSizeValidator: '@App\Service\FileValidator\FileSizeValidator'
         $fileTypeValidator: '@App\Service\FileValidator\FileTypeValidator'
 
-    App\Service\FileReader\XmlParser:
-        $fileReadableChecker: '@App\Service\FileReader\FileReadableChecker'
-        $xmlLoader: '@App\Service\FileReader\XmlLoader'
+    App\Service\CatalogItem\XmlDataHandler:
+        $fileReadableChecker: '@App\Service\FileValidator\FileReadableChecker'
+        $xmlDataStore: '@App\Service\CatalogItem\XmlDataStore'
 
-    App\Service\CatalogItem\XmlDataStorage:
+    App\Service\CatalogItem\XmlDataStore:
         $xmlDataValidator: '@App\Service\DataValidator\XmlDataValidator'
         $entityManagerService: '@App\Service\EntityManager\EntityManagerService'
         $logger: '@logger'

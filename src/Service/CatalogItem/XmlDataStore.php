@@ -3,7 +3,7 @@
 namespace App\Service\CatalogItem;
 
 use App\Configuration\CatalogItemConfiguration;
-use App\Contract\DataStorage\XmlDataStorageInterface;
+use App\Contract\DataStore\XmlDataStoreInterface;
 use App\Contract\DataValidator\XmlDataValidatorInterface;
 use App\Entity\CatalogItem;
 use App\Exception\NoDataSavedException;
@@ -15,8 +15,9 @@ use Exception;
 use Psr\Log\LoggerInterface;
 use SimpleXMLElement;
 
-readonly class XmlDataStorage implements XmlDataStorageInterface
+readonly class XmlDataStore implements XmlDataStoreInterface
 {
+    private const BATCH_SIZE = 50;
     private EntityRepository $catalogItemRepository;
 
     public function __construct(
@@ -31,15 +32,10 @@ readonly class XmlDataStorage implements XmlDataStorageInterface
 
 
     /**
-     * Processes and stores a collection of XML elements in the database in batches.
-     *
-     * @param SimpleXMLElement $elements The collection of XML elements to be processed and stored.
-     * @return int The number of elements successfully processed and stored.
-     * @throws NoDataSavedException If no elements were successfully saved.
+     * {@inheritDoc}
      */
     public function store(SimpleXMLElement $elements): int
     {
-        $batchSize = 100;
         $processedCount = 0;
         foreach ($elements as $element) {
             if ($this->processElement($element)) {
@@ -47,23 +43,22 @@ readonly class XmlDataStorage implements XmlDataStorageInterface
             }
 
             // Flush and clear in batches to optimize performance
-            if ($processedCount % $batchSize === 0) {
+            if ($processedCount % self::BATCH_SIZE === 0) {
                 $this->entityManagerService->flushAndClear();
             }
         }
 
         // This avoids an unnecessary flush if the last operation completed a batch.
-        if ($processedCount % $batchSize !== 0) {
+        if ($processedCount % self::BATCH_SIZE !== 0) {
             $this->entityManagerService->flushAndClear();
-        }
-
-        if ($processedCount === 0) {
-            throw new NoDataSavedException('No data is saved.');
         }
 
         return $processedCount;
     }
 
+    /**
+     * @throws Exception
+     */
     private function processElement(SimpleXMLElement $element): bool
     {
         if (!$this->validateElement($element)) {

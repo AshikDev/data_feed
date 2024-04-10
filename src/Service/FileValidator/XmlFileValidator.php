@@ -32,7 +32,7 @@ readonly class XmlFileValidator implements FileValidatorInterface
         $this->filePathValidator->validateFile($filepath);
 
         // Validates the file size against a maximum allowed size of 5MB.
-        $this->fileSizeValidator->validateFile($filepath, AppConstants::MAX_UPLOAD_SIZE);
+        $this->fileSizeValidator->validateFile($filepath, AppConstants::MAX_UPLOAD_SIZE_IN_MB);
 
         // Validates the XML file by verifying its extension and MIME type.
         $this->fileTypeValidator->validateFile(

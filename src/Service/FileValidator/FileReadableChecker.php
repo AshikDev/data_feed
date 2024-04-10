@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Service\FileReader;
+namespace App\Service\FileValidator;
 
-use App\Contract\FileReader\FileReadableInterface;
+use App\Contract\FileValidator\FileReadableCheckerInterface;
 use App\Exception\FileNotReadableException;
 
-class FileReadableChecker implements FileReadableInterface
+class FileReadableChecker implements FileReadableCheckerInterface
 {
     /**
      * {@inheritDoc}

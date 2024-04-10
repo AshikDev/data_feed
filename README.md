@@ -1,17 +1,31 @@
 # Data Feed Application
 
-## Overview
-This application is designed to process XML data feeds and store the processed data in a database. It's built using the Symfony framework and provides a command-line interface for easy data manipulation.
+## Table of Contents
 
-## Features
-- XML data parsing and processing
-- Validation of data and files
-- Flexible mapping of XML fields to database columns
-  - Insertion of data into a database
-  - Updates data if already exists (based on entity_id)
-  - Efficient handling of large data feeds
-- Keeps error log
-- Ability to conduct PHP unit tests for comprehensive testing of the application
+- [Overview](#overview)
+- [Feature](#feature)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Alternative Database Configurations](#alternative-database-configurations)
+- [Usage](#usage)
+- [Expected Output](#expected-output)
+- [File Structure](#file-structure)
+
+## Overview
+This Symfony application validates, parses, and stores XML data in a database.
+
+## Feature
+- **File Validation:** Validates files by path, type, and size.
+- **Data Parsing:**
+  - Validates the integrity and format of data.
+  - Reads and processes XML data in chunks, optimizing memory usage.
+- **Data Storage:**
+  - Validates required fields.
+  - Maps XML fields to database columns flexibly.
+  - Handles data insertion and updates.
+  - Manages memory efficiently during batch operations.
+**Logging:** Maintains comprehensive error and operation logs.
+**Testing:** Ensures reliability with extensive PHP unit tests.
 
 ## Requirements
 - PHP 8.2 or higher
@@ -22,8 +36,8 @@ This application is designed to process XML data feeds and store the processed d
 ## Installation
 Clone the repository and install dependencies:
 ```bash
-git clone https://github.com/AshikDev/data_feed_app.git
-cd data_feed_app
+git clone https://github.com/AshikDev/data_feed.git
+cd data_feed
 composer install
 ```
 
@@ -40,8 +54,8 @@ php bin/console make:migration
 php bin/console doctrine:migrations:migrate
 ```
 
-## Alternative Database Configurations (optional)
-Configure your database of choice by editing the `.env` file.
+## Alternative Database Configurations
+This step is optional. Configure your database of choice by editing the `.env` file.
 
 ### Alternatively configure MariaDB Credentials in `.env` file
 Remove the comment mark from the line below:
@@ -145,11 +159,9 @@ php bin/phpunit --filter testExecuteFailure tests/Command/DataFeedCommandTest.ph
 
 Console output should show 3446 rows saved out of 3449 from the specified XML file, as three rows lack required criteria based on my database design. The output is provided below:
 
-`[INFO] Processing XML file`
+`[INFO] Validating XML file`
 
-`[INFO] Reading XML Data`
-
-`[INFO] Storing XML Data`
+`[INFO] Parsing and Storing XML Data`
 
 `20:51:34 ERROR     [app] Entity Id: 4450. Price is required.`
 
@@ -157,12 +169,11 @@ Console output should show 3446 rows saved out of 3449 from the specified XML fi
 
 `20:51:35 ERROR     [app] Entity Id: 5124. Name is required.`
 
-`[INFO] 3446 rows are saved`
+`! [NOTE] 3446 row are saved  `
 
 `[OK] Done`
 
-
-# File Navigation:
+# File Structure:
 
 I've completed my tasks on the specified files and am providing the path for your review.
 
@@ -173,37 +184,3 @@ I've completed my tasks on the specified files and am providing the path for you
 #### PHP unit test
 
 `tests/Command/DataFeedCommandTest.php`
-
-#### Clean Log File
-
-`src/Command/ClearLogFileCommand.php`
-
-#### Entity
-
-`src/Entity/CatalogItem.php`
-
-#### Repository
-
-`src/Repository/CatalogItemRepository.php`
-
-#### DataFeed Static Configurations (Property Maps, Required Fields)
-
-`src/Service/DataFeedConfiguration.php`
-
-#### SQLite Path (if you want to use)
-
-`var/sqlite/data_feed.db`
-
-# NOTE
-
-**Alternatively:** If the necessary environment isn't set up, use Docker to run the console app. The provided Dockerfile should be incorporated as a service in a YAML file of your choosing. After adding this, execute the command `docker compose up -d` to start the service. e.g.
-
-```bash
-services:
-  data_feed_app:
-    build: .
-    volumes:
-      - .:/app
-    depends_on:
-      - mysql
-```

@@ -3,11 +3,9 @@
 namespace App\Tests\Command;
 
 use App\Command\DataFeedCommand;
-use App\Service\CatalogItem\XmlDataStorage;
-use App\Service\FileReader\XmlParser;
+use App\Service\CatalogItem\XmlDataStore;
+use App\Service\CatalogItem\XmlDataHandler;
 use App\Service\FileValidator\XmlFileValidator;
-use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -27,8 +25,8 @@ class DataFeedCommandTest extends KernelTestCase
 
         // fetches and injects dependencies for the constructor from the container
         $xmlFileValidator = $container->get(XmlFileValidator::class);
-        $xmlParser = $container->get(XmlParser::class);
-        $xmlDataStorage = $container->get(XmlDataStorage::class);
+        $xmlParser = $container->get(XmlDataHandler::class);
+        $xmlDataStorage = $container->get(XmlDataStore::class);
 
         // instantiates the application using constructor's required parameters
         $application = new Application($kernel);

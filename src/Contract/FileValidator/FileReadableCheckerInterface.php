@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Contract\FileReader;
+namespace App\Contract\FileValidator;
 
 use App\Exception\FileNotReadableException;
 
-interface FileReadableInterface
+interface FileReadableCheckerInterface
 {
     /**
      * Validates if a file is readable.
