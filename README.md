@@ -158,6 +158,10 @@ php bin/phpunit --filter testExecuteFailure tests/Command/DataFeedCommandTest.ph
 
 Console output should show 3446 rows saved out of 3449 from the specified XML file, as three rows lack required criteria based on my database design. The output is provided below:
 
+`Process feed.xml file and pushes data to a database.`
+`====================================================`
+
+
 `[INFO] Validating XML file`
 
 `[INFO] Parsing and Storing XML Data`
